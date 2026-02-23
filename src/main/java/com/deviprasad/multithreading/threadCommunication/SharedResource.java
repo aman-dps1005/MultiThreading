@@ -7,7 +7,7 @@ public class SharedResource{
     public synchronized void publish(int val) {
         if (hasData) {
             try {
-                wait();
+                wait();// wait a thread if it needs to satisfy a condition to access a resource
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -16,7 +16,7 @@ public class SharedResource{
         this.data = val;
         hasData = true;
         System.out.println("Producing: "+this.data);
-        notify();
+        notify(); //let all the waiting threads know that you freed the lock
     }
 
     public synchronized void consume() {
